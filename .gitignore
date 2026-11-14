@@ -1,0 +1,25 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Sensitive API keys & secrets
+**/.env
+**/*.env
+!**/.env.example
+
+# Python cache & bytecode
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/*.so
+
+# ChromaDB & SQLite databases
+**/data/chromadb/
+**/*.sqlite3
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

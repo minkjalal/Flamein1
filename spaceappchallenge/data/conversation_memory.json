@@ -1,0 +1,186 @@
+[
+  {
+    "timestamp": "2026-11-14T15:31:29.479042+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Here is a compact graph set for **spherical flames in microgravity**, using the retrieved NASA data.\n\n### Graph 1 — Quenching distance of a methane/air spherical flame\n\nData from the **Low-Speed Quenching Distance Expansion** study: quenching distance expands from **1.8 mm at 1g** to **5.2 mm at 0g** — a factor of about **2.9×**.\n\n```text\nQuenching distance (mm)\n\n0g  | ██████████████████████████  5.2 mm\n1g  | █████████                  1.8 mm\n```\n\n**Interpretation:** In microgravity, spherical diffusion flames expand significantly, so flame-quenching gaps and mesh screens that work on Earth may allow flames to penetrate in spacecraft. This is a direct spacecraft fire-safety concern.\n\n### Graph 2 — Hot vs. cool spherical droplet flames\n\nData from **FLEX / FLEX-2**: after hot-flame extinction, large droplets can sustain a **cool flame** that is non-luminous and burns at roughly **50–70% lower** burning rate than the hot flame. Cool flames can persist for up to **20 s**.\n\n```text\nRelative burning rate (%)\n\nHot flame   | ████████████████████  100%\nCool flame  | ███████               30–50% of hot flame\n```\n\n**Interpretation:** The cool flame is a low-temperature oxidation mode below about **700 K**. It is invisible and can persist after the visible blue-white hot flame has extinguished, which matters for droplet-fuel fire risk and post-extinction hazard assessment.\n\n### Python code to render the graph\n\n```python\nimport matplotlib.pyplot as plt\n\nfig, axs = plt.subplots(1, 2, figsize=(10, 4))\n\n# Quenching distance: 1g vs 0g\naxs[0].bar([\"1g\", \"0g\"], [1.8, 5.2], color=[\"tab:blue\", \"tab:orange\"])\naxs[0].set_ylabel(\"Quenching distance (mm)\")\naxs[0].set_title(\"Methane/air spherical flame\\nquenching distance\")\n\n# Hot vs cool droplet flame burning rate\naxs[1].bar([\"Hot flame\", \"Cool flame\"], [100, 40], color=[\"tab:red\", \"tab:purple\"])\naxs[1].set_ylabel(\"Relative burning rate (%)\")\naxs[1].set_title(\"FLEX/FLEX-2 droplet flames\\nhot vs cool burning\")\naxs[1].set_ylim(0, 110)\n\nplt.tight_layout()\nplt.show()\n```\n\nThe cool-flame bar uses **40%** as a representative midpoint of the reported **30–50%** range. Also relevant from **ACME-BRE**: radiative heat loss is the dominant extinction mechanism for large microgravity diffusion flames, and a minimum burning rate exists below which flames cannot sustain themselves.",
+    "sources": [
+      "FLEX-2 (Flame Extinguishment Experiment 2) (Experiments)",
+      "ACME-BRE (Advanced Combustion via Microgravity Experiments - Burning Rate Emulator) (Experiments)",
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "FLEX (Flame Extinguishment Experiment) (Experiments)",
+      "SAFFIRE-III (Spacecraft Fire Experiment III) (Experiments)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:33:31.981096+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:33:42.948693+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:34:16.937965+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:49:43.867811+00:00",
+    "user_message": "Why do flames become spherical in microgravity?",
+    "ai_response": "Flames become spherical in microgravity primarily because **buoyancy-driven natural convection disappears**. On Earth, hot combustion gases are less dense than surrounding cool air, so they rise rapidly, creating an upward plume. That plume distorts the flame into the familiar teardrop/elongated shape and actively transports oxidizer and heat upward. In microgravity, there is no “up,” so that buoyant plume does not form.\n\nInstead, fuel vapor and oxidizer move mainly by **molecular diffusion and any imposed ventilation flow**. For an isolated fuel droplet or a small quiescent fuel source, this transport is nearly uniform in all directions, so the flame front grows outward with near-spherical symmetry. NASA data from the **Quiescent Sphericity and Convective Absence in Microgravity** study report a flame sphericity index **> 0.98** under **0-g, 21% O₂, 101.3 kPa, and 0 cm/s flow**, with peak gas temperatures **150–250 K lower** than buoyant terrestrial flames because the hot gases are not concentrated into a rising plume.\n\nRelated NASA observations support the same mechanism:\n\n- **BASS** found that thin fuels in quiescent microgravity form **hemispherical blue flames**, contrasting with elongated yellow flames in 1g.\n- **ACME-CLD** showed microgravity diffusion flames are **wider and shorter** than 1g flames because buoyancy-induced flow acceleration is absent.\n- **ACME-BRE** observes spherical-to-hemispherical flames on flat burner surfaces, with radiative heat loss becoming a dominant extinction mechanism in microgravity.\n\nImportant caveat: microgravity flames are not always perfectly spherical. If there is forced coflow, a burner surface, or asymmetric fuel delivery, the flame can be hemispherical, conical, or bulbous. The spherical shape is most pronounced for **quiescent, isolated fuel sources** where diffusion is the dominant transport process.",
+    "sources": [
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)",
+      "ACME-BRE (Advanced Combustion via Microgravity Experiments - Burning Rate Emulator) (Experiments)",
+      "ACME-CLD (Advanced Combustion via Microgravity Experiments - Coflow Laminar Diffusion Flame) (Experiments)",
+      "BASS (Burning and Suppression of Solids) (Experiments)",
+      "Low-Speed Quenching Distance Expansion (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:49:45.301227+00:00",
+    "user_message": "What is the capital of France?",
+    "ai_response": "The capital of France is Paris.\n\nWarning: This answer is not from the database of NASA.",
+    "sources": []
+  },
+  {
+    "timestamp": "2026-11-14T15:49:45.306863+00:00",
+    "user_message": "how are you?",
+    "ai_response": "I'm running well and ready to analyse NASA's microgravity combustion data. Ask me about flame behavior, material flammability, or spacecraft fire safety.",
+    "sources": []
+  },
+  {
+    "timestamp": "2026-11-14T15:49:45.467967+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:50:02.578942+00:00",
+    "user_message": "Explain cool flames from FLEX-2",
+    "ai_response": "Cool flames are a distinct **low-temperature, non-luminous combustion mode** characterized by FLEX and then studied systematically by **FLEX-2** on the ISS. They are not simply a dim hot flameâthey are sustained by low-temperature hydrocarbon oxidation chemistry after the visible hot flame has extinguished.\n\n### What FLEX-2 showed\n- **Invisible continuation after extinction:** After the blue spherical hot flame around a fuel droplet went out, combustion could continue in a diffuse, completely invisible spherical shell. FLEX-2 observed this cool-flame mode for large droplets and multi-component fuels.\n- **Temperature regime:** Cool flames operate roughly in the **600â800 K** range, with low-temperature oxidation chemistry below about **700 K**âfar below the temperatures of a visible hot flame.\n- **Duration:** FLEX-2 found cool flames could persist for **up to ~20 seconds** after hot-flame extinction for large droplets; related FLEX/cool-flame data indicate invisible reaction can last up to **~40 seconds** post-extinction under some conditions.\n- **Burning rate:** Cool-flame burning rates were approximately **50â70% lower** than hot-flame burning rates.\n- **Fuel effects:** Bi-component droplets showed **preferential vaporization**, which delayed cool-flame onset. FLEX-2 specifically targeted multi-component fuels and larger droplets to map these effects.\n- **Conditions studied:** FLEX-2 used **15â30% Oâ**, **100â300 kPa**, droplet diameters of **2â6 mm**, and nitrogenâoxygen or carbon dioxideâoxygen mixtures.\n- **Transition possibility:** One FLEX-2 objective was to determine whether cool flames can transition back to hot-flame ignitionâan important safety question because a âdeadâ fire could re-ignite.\n\n### Why it matters in microgravity\nIn microgravity, buoyancy-driven convection is absent, so droplet flames become spherical and radiative heat loss can dominate extinction. That allows the hot flame to disappear while low-temperature oxidation continues. The result is a fire that **looks extinguished but is still chemically active**, potentially releasing **carbon monoxide, formaldehyde, and volatile intermediates**.\n\n### Spacecraft fire-safety implication\nCool flames mean âno visible flameâ does not equal âno combustion.â Spacecraft fire detection and suppression strategies must account for invisible, low-temperature smoldering-like droplet combustion, especially after apparent extinction.",
+    "sources": [
+      "FLEX-2 (Flame Extinguishment Experiment 2) (Experiments)",
+      "FLEX (Flame Extinguishment Experiment) (Experiments)",
+      "Cool Flame Burning Sustained Below Classical Flammability Limits (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:50:02.740679+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:50:04.320268+00:00",
+    "user_message": "what is 2+2?",
+    "ai_response": "2 + 2 = 4.\n\nWarning: This answer is not from the database of NASA.",
+    "sources": []
+  },
+  {
+    "timestamp": "2026-11-14T15:51:29.725762+00:00",
+    "user_message": "Tell me about BASS-II",
+    "ai_response": "**BASS-II (Burning and Suppression of Solids – II)** was an ISS solid-combustion experiment flown from **2014–2017**. It extended the original **BASS** investigation by studying flame spread over **flat composite and fabric samples in a flow duct**, with emphasis on materials relevant to Constellation-era spacecraft and future exploration vehicles.\n\nKey BASS-II objectives from the NASA context:\n\n- **Extend flame-spread measurements** to wider and thicker fuel samples.\n- **Investigate sample geometry effects**—especially width and thickness—on flame behavior in microgravity.\n- **Test composite and multi-layer fabric materials** representative of advanced spacecraft designs.\n- **Determine when flames grow versus extinguish** under realistic cabin airflow conditions.\n- **Refine flammability screening criteria** for exploration-class missions.\n\nWhy this matters: in microgravity, buoyancy-driven convection is absent, so airflow velocity, oxygen concentration, and sample geometry can control flame spread and extinction in ways that differ strongly from 1g. BASS-II’s flow-duct design was intended to capture those effects for realistic spacecraft cabin ventilation conditions. The provided context does not include specific BASS-II numerical flame-spread rates or extinction limits, so those should not be inferred without the underlying results data.",
+    "sources": [
+      "BASS-II (Burning and Suppression of Solids - II) (Experiments)",
+      "BASS (Burning and Suppression of Solids) (Experiments)",
+      "SAFFIRE-I (Spacecraft Fire Experiment I) (Experiments)",
+      "Material Qualification in Exploration Atmospheres (Low Pressure, High O2) (Safety Guidelines)",
+      "Electrostatic Active Extinction in Unmanned Avionics Bays (Safety Guidelines)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:51:33.108313+00:00",
+    "user_message": "what is the bass guitar",
+    "ai_response": "A bass guitar is a stringed instrument that plays in the low-pitched bass register. It usually has four strings—typically tuned E–A–D–G, one octave below the lowest four strings of a standard guitar—though five- and six-string versions exist. Bass guitars can be electric or acoustic; the electric bass is common in rock, pop, jazz, funk, and many other genres. It generally provides the harmonic and rhythmic foundation of a band by linking the drums and the chords/melody. Its thicker strings and longer scale length produce deep tones, and players typically pluck, pick, or slap the strings.\n\nWarning: This answer is not from the database of NASA.",
+    "sources": []
+  },
+  {
+    "timestamp": "2026-11-14T15:51:33.328271+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:52:45.804183+00:00",
+    "user_message": "Why are flames spherical in microgravity?",
+    "ai_response": "Flames become spherical in microgravity primarily because **buoyancy-driven natural convection disappears**. On Earth, hot combustion gases rise, creating an upward plume that stretches the flame, feeds it with a directional oxidizer flow, and produces the familiar teardrop/elongated shape. In microgravity, there is no “up,” so the flame has no buoyant plume to distort it; fuel and oxygen move mainly by **diffusion** and any imposed ventilation flow, allowing the reaction zone to expand more symmetrically around the fuel source.\n\nGrounded in the NASA context:\n\n- **FLEX** found that isolated fuel droplets burn with a **sphericity index > 0.98** in quiescent microgravity, with peak gas temperatures **150–250 K lower** than buoyant terrestrial flames. The absence of rising buoyant plumes changes temperature fields and oxidizer transport.\n- **ACME-CLD** showed microgravity diffusion flames are **wider and shorter** than 1g flames because buoyancy-induced flow acceleration is absent. Soot formation can also be enhanced, lowering the smoke point.\n- **ACME-BRE** observed **spherical-to-hemispherical** flames on flat burner surfaces, with radiative heat loss becoming a dominant extinction mechanism for large microgravity diffusion flames.\n- **BASS** reported thin fuels forming **hemispherical blue flame structures** in quiescent microgravity, contrasting with elongated yellow flames in 1g.\n- **ACME-s-Flame** found quenching distances expand from **1.8 mm at 1g to 5.2 mm at 0g**, consistent with altered flame geometry and transport near surfaces.\n\nImportant caveat: “spherical” is the ideal quiescent case. In real spacecraft, ventilation, imposed coflow, or nearby surfaces can break symmetry and produce conical, bulbous, or hemispherical flames. The safety consequence is significant: terrestrial flame sensors calibrated for upward plume signatures may fail to detect spherical microgravity fires, and flame arrestors/mesh screens sized for Earth may allow microgravity flames to penetrate larger gaps.",
+    "sources": [
+      "FLEX (Findings)",
+      "ACME-CLD (Advanced Combustion via Microgravity Experiments - Coflow Laminar Diffusion Flame) (Experiments)",
+      "ACME-BRE (Advanced Combustion via Microgravity Experiments - Burning Rate Emulator) (Experiments)",
+      "BASS (Burning and Suppression of Solids) (Experiments)",
+      "ACME-s-Flame (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:52:51.942821+00:00",
+    "user_message": "What is the extinction oxygen threshold of PMMA?",
+    "ai_response": "**PMMA (polymethyl methacrylate, Plexiglass) has an extinction oxygen threshold of 15.5% O₂** in the NASA materials flammability database (Source 3).\n\n**Context and implications:**\n\n- **Comparison to polycarbonate:** Polycarbonate's extinction threshold is **18.5% O₂** — notably higher, meaning polycarbonate requires a richer oxygen environment to sustain flame spread and is therefore the more fire-resistant transparent material. This is why the database recommends polycarbonate as an acceptable alternative to PMMA where transparency is required, particularly in high-O₂ environments.\n- **Flammability rating:** PMMA carries a **flammability rating of 8** (vs. 5 for polycarbonate) and a **toxicity rating of 6**, with an ignition temperature in air of **460 °C** and heat of combustion of **25.2 MJ/kg**.\n- **Experiments tested in:** BASS, BASS-II, ACME-SoFIE, SoFIE, and SAFFIRE-II — PMMA is one of the most extensively characterized fuels in the microgravity combustion program, which makes its 15.5% threshold a well-anchored reference value.\n\n**Spacecraft fire safety relevance:**\n\n- **Standard ISS atmosphere (~21% O₂, 101 kPa):** PMMA is above its extinction threshold and will sustain flame spread. The BASS-II results show that opposed-flow PMMA flames exhibit a **dual extinction limit** — blowing extinction above ~35 cm/s and radiative quenching below ~2 cm/s, with the radiative extinction boundary reached at **1.5 cm/s forced air velocity at 21% O₂**. This means reduced cabin ventilation can extinguish a PMMA flame through radiative heat loss alone, without chemical suppressants.\n- **Exploration atmosphere (34% O₂, 56.5 kPa):** SoFIE data show increased flammability for most materials under these conditions, and the PMMA flammability boundary shifts to **lower flow velocities**. The 15.5% threshold measured in standard atmosphere should not be assumed to hold — material rankings change between standard and exploration atmospheres, so the database explicitly flags that material selection criteria must be tightened for exploration vehicles.\n- **Design guidance:** Use PMMA only in small quantities with fire barriers in exploration atmospheres, and substitute fire-retardant (V-0 rated) polycarbonate where transparency is needed.",
+    "sources": [
+      "Polycarbonate (Materials)",
+      "BASS-II (Findings)",
+      "PMMA (Plexiglass) (Materials)",
+      "ACME-CLD (Findings)",
+      "SoFIE (Solid Fuel Ignition and Extinction) (Experiments)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:52:52.159596+00:00",
+    "user_message": "make a graph on spherical flames",
+    "ai_response": "Spherical flames in microgravity (grounded in NASA findings):\n\n- **Quenching distance** expands from 1.8 mm at 1g to 5.2 mm at 0g (~2.9×), so flame arrestors and mesh screens sized for Earth may allow microgravity flames to penetrate.\n- **Flame standoff distance** from burner surfaces increases by about 300% versus 1g boundary layers (ACME-BRE), changing heat transfer back to the fuel.\n- **Droplet flame sphericity** exceeds 0.98 in quiescent microgravity, with peak gas temperatures 150–250 K lower than buoyant flames (FLEX).\n\nChart generated from local NASA knowledge-base findings.",
+    "sources": [
+      "Low-Speed Quenching Distance Expansion (Findings)",
+      "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment (Findings)",
+      "Quiescent Sphericity and Convective Absence in Microgravity (Findings)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T15:53:04.214377+00:00",
+    "user_message": "Summarize SAFFIRE findings",
+    "ai_response": "## SAFFIRE Campaign â Summary of Findings\n\nThe **Spacecraft Fire Safety Experiments (SAFFIRE)** series flew on Northrop Grumman **Cygnus** resupply vehicles after ISS departure â a safe, uncrewed platform for deliberately large fires at spacecraft-relevant scale. Three flights are represented in the retrieved data.\n\n### SAFFIRE-I (2016) â First large-scale microgravity fire\n- Burned a **0.4 m Ã 0.95 m cottonâfiberglass blend fabric** sample â the first fire growth experiment at a scale relevant to real spacecraft fires.\n- **Key finding:** a large flame *can* sustain and spread across a realistic-sized sample in microgravity, confirming that small-sample ground tests do not capture full-scale fire growth.\n- Delivered the first measurements of **flame spread rate, heat release rate, and thermal environment** for a large microgravity fire, and validated sensor performance for spacecraft fire detection.\n\n### SAFFIRE-II (2016) â Material flammability screening\n- Tested **nine small samples of different materials simultaneously** in a realistic spacecraft atmosphere and airflow.\n- **Central finding:** microgravity flammability rankings do **not** always match **NASA-STD-6001 Test 1** (1g upward-spread) results â some materials that pass ground screening behave differently in microgravity. This directly challenges the adequacy of ground-based screening for flight certification.\n- Material-specific results in the database:\n  - **Silicone rubber (PDMS):** flammability rating 5, extinction Oâ threshold **18.0%**, ignition temperature 450 Â°C in air. Its **ash self-extinguishing effect proved unreliable** â the database recommends treating it as *moderately flammable* and preferring fire-retardant formulations. It also produces **particulate silica ash** (low smoke, but a sensor/contamination concern).\n  - **Teflon (PTFE):** flammability rating 1 (very hard to ignite, 560 Â°C ignition in air, heat of combustion only 5.1 MJ/kg) but **toxicity rating 9** â above ~400 Â°C it releases **HF and COFâ**, so ventilation monitoring near heat sources is essential.\n\n### SAFFIRE-III (2017) â Thickness and airflow effects\n- Repeated the SAFFIRE-I geometry with a **thicker composite sample and higher forced airflow velocity**, simulating a more challenging fire scenario.\n- Tested whether **increased ventilation accelerates or suppresses** large microgravity fires â a critical question because spacecraft ventilation is the dominant oxidizer-delivery mechanism in the absence of buoyancy.\n- Provided additional **heat release rate and total heat output** data points for computational fire-growth model validation.\n\n### Cross-cutting implications for spacecraft fire safety\n1. **Buoyancy-free flame spread is not simply \"slower\" or \"safer\"** â large samples sustain spread, and ranking of materials can shift versus 1g tests.\n2. **Ground screening (NASA-STD-6001 Test 1) is necessary but not sufficient**; SAFFIRE-II explicitly tested and found limits in its predictive accuracy.\n3. **Ventilation is a first-order variable** (SAFFIRE-III): airflow can feed a fire as readily as it can cool it.\n4. **Toxicology matters as much as ignitability** â PTFE's low flammability is offset by severe HF/COFâ hazard; silicone's low smoke is offset by silica particulate and unreliable self-extinction.\n5. **Detection and model validation at scale** were explicit SAFFIRE objectives, supporting design of spacecraft smoke/fire sensors and computational tools for habitat (lunar/Mars) fire safety analysis.\n\n**Data limitation:** the retrieved context covers SAFFIRE-I, II, and III only. Later SAFFIRE flights (e.g., Saffire IVâVI, which extended sample size and material variety) are not represented here, so this summary should not be treated as the complete campaign record.",
+    "sources": [
+      "Silicone Rubber (Materials)",
+      "SAFFIRE-II (Spacecraft Fire Experiment II) (Experiments)",
+      "SAFFIRE-I (Spacecraft Fire Experiment I) (Experiments)",
+      "SAFFIRE-III (Spacecraft Fire Experiment III) (Experiments)",
+      "Teflon (PTFE) (Materials)"
+    ]
+  },
+  {
+    "timestamp": "2026-11-14T16:06:48.368935+00:00",
+    "user_message": "make a graph on saffire 1",
+    "ai_response": "SAFFIRE-I (Spacecraft Fire Experiment I) (2016, Cygnus Resupply Vehicle)\nConditions: 21% O2 · 101.3 kPa · 15-25 cm/s airflow · 0.4 x 0.95 m sample.\nFlame spread rate: 0.8-1.2 cm/s in microgravity vs 2-6 cm/s at 1g (range midpoints ~75% lower).\n- Large-scale flame spread was successfully sustained in microgravity for the first time\n- The flame spread rate over the large sample was approximately 1.0 cm/s, lower than small-scale ISS experiments at comparable conditions\nChart generated from the experiment record in the local NASA knowledge base.",
+    "sources": [
+      "SAFFIRE-I (Spacecraft Fire Experiment I) (Experiments)"
+    ]
+  }
+]

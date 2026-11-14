@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+    <title>Flame in Freefall — NASA Fire Safety Intelligence</title>
+    <meta name="description" content="AI-Powered Fire Safety Insights from Microgravity Combustion Data — NASA Space Apps Challenge 2026">
+    <meta name="theme-color" id="meta-theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Chart.js for sleek charts & radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Theme tokens */
+        :root {
+            color-scheme: light;
+            --primary: 255 94 58;
+            --primary-container: 255 138 101;
+            --on-primary: 255 255 255;
+            --on-primary-container: 117 35 5;
+            --secondary: 85 101 0;
+            --secondary-container: 214 237 122;
+            --on-secondary-container: 90 108 0;
+            --tertiary: 50 101 120;
+            --tertiary-container: 128 177 199;
+            --background: 255 255 255;
+            --surface: 255 255 255;
+            --surface-dim: 223 217 207;
+            --surface-container-low: 249 243 232;
+            --surface-container: 243 237 226;
+            --on-background: 17 24 39;
+            --on-surface: 0 0 0;
+            --on-surface-variant: 85 85 85;
+            --outline: 137 114 107;
+            --outline-variant: 221 192 184;
+            --info: 59 130 246;
+            --success: 34 197 94;
+            --danger: 239 68 68;
+            --warning: 245 158 11;
+            --warning-text: #92400e;
+
+            --panel-bg: rgba(255, 255, 255, 0.45);
+            --panel-soft-bg: rgba(255, 255, 255, 0.38);
+            --panel-strong-bg: rgba(255, 255, 255, 0.62);
+            --panel-solid-bg: rgba(255, 255, 255, 0.94);
+            --panel-hover-bg: rgba(255, 255, 255, 0.85);
+            --panel-border: rgba(255, 255, 255, 0.68);
+            --divider: rgba(0, 0, 0, 0.06);
+            --divider-strong: rgba(0, 0, 0, 0.1);
+            --panel-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            --nav-bg: rgba(255, 255, 255, 0.55);
+            --nav-border: rgba(255, 255, 255, 0.65);
+            --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+            --switch-bg: rgba(255, 255, 255, 0.55);
+            --switch-border: rgba(255, 255, 255, 0.72);
+            --ambient-glow:
+                radial-gradient(1200px circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(255, 94, 58, 0.08), rgba(79, 70, 229, 0.06), rgba(217, 70, 239, 0.04), transparent 80%),
+                linear-gradient(135deg, rgba(255, 94, 58, 0.04) 0%, rgba(79, 70, 229, 0.03) 50%, rgba(217, 70, 239, 0.02) 100%);
+            --chart-text: #555555;
+            --chart-grid: rgba(0, 0, 0, 0.06);
+            --chart-border: #ffffff;
+            --canvas-edge: rgba(0, 0, 0, 0.09);
+            --canvas-label: #111827;
+            --canvas-node-stroke: #ffffff;
+        }
+
+        html.dark {
+            color-scheme: dark;
+            --primary: 255 122 92;
+            --primary-container: 154 52 28;
+            --on-primary: 31 12 7;
+            --on-primary-container: 255 229 219;
+            --secondary: 190 242 100;
+            --secondary-container: 56 73 8;
+            --on-secondary-container: 214 237 122;
+            --tertiary: 125 211 252;
+            --tertiary-container: 21 94 117;
+            --background: 7 12 22;
+            --surface: 12 19 32;
+            --surface-dim: 17 25 39;
+            --surface-container-low: 15 23 38;
+            --surface-container: 20 30 48;
+            --on-background: 241 245 249;
+            --on-surface: 241 245 249;
+            --on-surface-variant: 148 163 184;
+            --outline: 113 130 150;
+            --outline-variant: 51 65 85;
+            --info: 96 165 250;
+            --success: 74 222 128;
+            --danger: 248 113 113;
+            --warning: 251 191 36;
+            --warning-text: #fcd34d;
+
+            --panel-bg: rgba(15, 23, 42, 0.62);
+            --panel-soft-bg: rgba(15, 23, 42, 0.5);
+            --panel-strong-bg: rgba(17, 26, 43, 0.72);
+            --panel-solid-bg: rgba(8, 13, 24, 0.95);
+            --panel-hover-bg: rgba(30, 41, 59, 0.82);
+            --panel-border: rgba(148, 163, 184, 0.14);
+            --divider: rgba(148, 163, 184, 0.12);
+            --divider-strong: rgba(148, 163, 184, 0.2);
+            --panel-shadow: 0 8px 32px rgba(0, 0, 0, 0.38);
+            --nav-bg: rgba(10, 16, 28, 0.8);
+            --nav-border: rgba(148, 163, 184, 0.16);
+            --nav-shadow: 0 12px 40px rgba(0, 0, 0, 0.42);
+            --switch-bg: rgba(30, 41, 59, 0.9);
+            --switch-border: rgba(148, 163, 184, 0.22);
+            --ambient-glow:
+                radial-gradient(1200px circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(255, 122, 92, 0.17), rgba(79, 70, 229, 0.13), rgba(217, 70, 239, 0.09), transparent 80%),
+                linear-gradient(135deg, rgba(255, 122, 92, 0.06) 0%, rgba(79, 70, 229, 0.08) 50%, rgba(217, 70, 239, 0.04) 100%);
+            --chart-text: #94a3b8;
+            --chart-grid: rgba(148, 163, 184, 0.14);
+            --chart-border: #0f172a;
+            --canvas-edge: rgba(148, 163, 184, 0.18);
+            --canvas-label: #cbd5e1;
+            --canvas-node-stroke: #0b1220;
+        }
+
+        body {
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+
+        .ambient-glow {
+            background: var(--ambient-glow);
+        }
+
+        /* Glassmorphism primitives */
+        .glass-card {
+            background: var(--panel-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--panel-border);
+            box-shadow: var(--panel-shadow);
+            transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        
+        .glass-pill {
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--panel-border);
+        }
+
+        .nav-shell {
+            background-color: var(--nav-bg);
+            border-color: var(--nav-border);
+            box-shadow: var(--nav-shadow);
+            transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .bg-panel { background-color: var(--panel-bg); }
+        .bg-panel-soft { background-color: var(--panel-soft-bg); }
+        .bg-panel-strong { background-color: var(--panel-strong-bg); }
+        .bg-panel-solid { background-color: var(--panel-solid-bg); }
+        .bg-panel-hover, .hover\:bg-panel-hover:hover { background-color: var(--panel-hover-bg); }
+        .border-panel { border-color: var(--panel-border); }
+        .border-divider { border-color: var(--divider); }
+        .border-divider-strong { border-color: var(--divider-strong); }
+        .bg-divider { background-color: var(--divider); }
+        .bg-divider-strong { background-color: var(--divider-strong); }
+        .divide-divider > :not([hidden]) ~ :not([hidden]) { border-color: var(--divider); }
+
+        .warning-panel {
+            background-color: rgb(var(--warning) / 0.1);
+            border: 1px solid rgb(var(--warning) / 0.28);
+            color: var(--warning-text);
+        }
+
+        /* Light / dark slider */
+        .theme-switch {
+            position: relative;
+            width: 58px;
+            height: 32px;
+            flex-shrink: 0;
+            border-radius: 9999px;
+            background: var(--switch-bg);
+            border: 1px solid var(--switch-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .theme-switch:focus-visible {
+            outline: 2px solid rgb(var(--primary) / 0.7);
+            outline-offset: 2px;
+        }
+        .theme-switch-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            background: rgb(var(--primary));
+            color: rgb(var(--on-primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(255, 94, 58, 0.35);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+        html.dark .theme-switch-knob {
+            transform: translateX(26px);
+        }
+        .theme-switch-track-icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            color: rgb(var(--on-surface-variant));
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .theme-switch-track-icon.sun { left: 7px; }
+        .theme-switch-track-icon.moon { right: 7px; }
+        html.dark .theme-switch-track-icon.sun { opacity: 0.3; }
+        html.dark .theme-switch-track-icon.moon { opacity: 0.8; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .theme-switch-knob { transition: none; }
+            body, .glass-card, .nav-shell { transition: none; }
+        }
+    </style>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "rgb(var(--primary) / <alpha-value>)",
+                        "primary-container": "rgb(var(--primary-container) / <alpha-value>)",
+                        "on-primary": "rgb(var(--on-primary) / <alpha-value>)",
+                        "on-primary-container": "rgb(var(--on-primary-container) / <alpha-value>)",
+                        "secondary": "rgb(var(--secondary) / <alpha-value>)",
+                        "secondary-container": "rgb(var(--secondary-container) / <alpha-value>)",
+                        "on-secondary-container": "rgb(var(--on-secondary-container) / <alpha-value>)",
+                        "tertiary": "rgb(var(--tertiary) / <alpha-value>)",
+                        "tertiary-container": "rgb(var(--tertiary-container) / <alpha-value>)",
+                        "background": "rgb(var(--background) / <alpha-value>)",
+                        "surface": "rgb(var(--surface) / <alpha-value>)",
+                        "surface-dim": "rgb(var(--surface-dim) / <alpha-value>)",
+                        "surface-container-low": "rgb(var(--surface-container-low) / <alpha-value>)",
+                        "surface-container": "rgb(var(--surface-container) / <alpha-value>)",
+                        "on-background": "rgb(var(--on-background) / <alpha-value>)",
+                        "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
+                        "on-surface-variant": "rgb(var(--on-surface-variant) / <alpha-value>)",
+                        "outline": "rgb(var(--outline) / <alpha-value>)",
+                        "outline-variant": "rgb(var(--outline-variant) / <alpha-value>)",
+                        "info": "rgb(var(--info) / <alpha-value>)",
+                        "success": "rgb(var(--success) / <alpha-value>)",
+                        "danger": "rgb(var(--danger) / <alpha-value>)",
+                        "warning": "rgb(var(--warning) / <alpha-value>)",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "display-xl": ["Plus Jakarta Sans", "sans-serif"],
+                        "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "body-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        };
+    </script>
+
+    <script>
+        (function () {
+            let saved = null;
+            try { saved = localStorage.getItem('flame-theme'); } catch (e) {}
+            const theme = saved === 'dark' ? 'dark' : 'light';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(theme);
+            document.documentElement.dataset.theme = theme;
+        })();
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container"
+      onmousemove="this.style.setProperty('--mouse-x', event.clientX + 'px'); this.style.setProperty('--mouse-y', event.clientY + 'px');">
+
+    <!-- Ambient Dynamic Glow Background -->
+    <div class="ambient-glow fixed inset-0 -z-10 pointer-events-none transition-all duration-700 ease-out"></div>
+
+    <!-- ── TOP NAVIGATION BAR (Matching New Design Strictly at Top) ── -->
+    <nav class="nav-shell fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-full border backdrop-blur-xl z-50 flex justify-between items-center py-2.5 md:py-3 px-5 md:px-7">
+        
+        <!-- Logo / Brand Emblem -->
+        <a class="flex items-center gap-2.5 cursor-pointer group" onclick="switchTab('dashboard')">
+            <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-sm">
+                <span class="material-symbols-outlined text-[20px] text-primary">local_fire_department</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display-xl text-base md:text-lg font-bold tracking-tight text-on-surface leading-tight">Flame in Freefall</span>
+                <span class="text-[9px] font-bold text-primary uppercase tracking-widest leading-none">NASA Space Apps</span>
+            </div>
+        </a>
+
+        <!-- Center Nav Items: EXACT nomenclature preserved -->
+        <div class="hidden lg:flex items-center gap-6">
+            <button id="nav-dashboard" class="nav-item text-primary font-bold font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('dashboard')">Dashboard</button>
+            <button id="nav-chat" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('chat')">Chat</button>
+            <button id="nav-explorer" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('explorer')">Explorer</button>
+            <button id="nav-compare" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('compare')">Comparison</button>
+            <button id="nav-safety" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('safety')">Safety & Risk</button>
+            <button id="nav-graph" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('graph')">Graph</button>
+        </div>
+
+        <!-- Right Action Items -->
+        <div class="flex items-center gap-2 md:gap-3">
+            <div id="engine-status-pill" class="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/40 border border-secondary-container text-on-secondary-container text-xs font-semibold">
+                <div class="w-2 h-2 rounded-full bg-success animate-pulse"></div>
+                <span id="engine-status-text">NASA RAG Active</span>
+            </div>
+
+            <button id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Switch between light and dark mode"
+                    title="Switch between light and dark mode" onclick="toggleTheme()" class="theme-switch">
+                <span class="material-symbols-outlined theme-switch-track-icon sun">light_mode</span>
+                <span class="material-symbols-outlined theme-switch-track-icon moon">dark_mode</span>
+                <span id="theme-knob" class="theme-switch-knob">
+                    <span id="theme-knob-icon" class="material-symbols-outlined text-[14px]">light_mode</span>
+                </span>
+            </button>
+
+            <button onclick="switchTab('chat')" class="bg-primary hover:bg-primary/90 text-on-primary font-medium text-xs md:text-sm px-3 md:px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all scale-95 active:scale-90 flex items-center gap-1.5">
+                <span class="hidden sm:inline">Ask FlameAI</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="lg:hidden p-1.5 text-on-surface-variant hover:text-primary" onclick="toggleMobileMenu()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-menu" class="fixed inset-x-4 top-20 bg-panel-solid backdrop-blur-2xl border border-panel rounded-3xl p-5 shadow-2xl z-40 hidden flex-col gap-3 lg:hidden">
+        <button class="text-left py-2 px-4 rounded-xl font-bold text-primary hover:bg-primary/10" onclick="switchTab('dashboard'); toggleMobileMenu();">Dashboard</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('chat'); toggleMobileMenu();">Chat</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('explorer'); toggleMobileMenu();">Explorer</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('compare'); toggleMobileMenu();">Comparison</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('safety'); toggleMobileMenu();">Safety & Risk</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('graph'); toggleMobileMenu();">Graph</button>
+        <div class="mt-1 pt-3 border-t border-divider">
+            <button onclick="toggleTheme()" class="w-full flex items-center justify-between py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10 transition-colors">
+                <span class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">contrast</span>
+                    Appearance
+                </span>
+                <span id="mobile-theme-label" class="text-xs font-bold text-primary">Light mode</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ── MAIN CONTENT CONTAINER ── -->
+    <main class="max-w-[1536px] mx-auto w-full pt-28 md:pt-36 pb-20 px-4 md:px-8">
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 1: DASHBOARD                                                 -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-dashboard" class="tab-view block space-y-16">
+            
+            <!-- Hero Banner -->
+            <div class="relative py-12 md:py-16 px-4 md:px-8 flex flex-col items-center justify-center text-center">
+                <div class="inline-flex items-center gap-2 bg-panel-soft backdrop-blur-xl border border-panel rounded-full px-4 py-1.5 mb-6 shadow-sm">
+                    <span class="bg-secondary-container text-on-secondary-container font-label-caps text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">NASA PSI DATA</span>
+                    <span class="font-body-md text-xs md:text-sm text-on-surface font-medium">BASS • ACME • SAFFIRE • SoFIE • FLEX</span>
+                </div>
+
+                <h1 class="font-display-xl text-4xl md:text-6xl lg:text-[68px] leading-[1.1] tracking-tight text-on-surface max-w-4xl font-extrabold mb-5">
+                    Flame in Freefall
+                </h1>
+                
+                <p class="font-body-lg text-base md:text-lg text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
+                    AI-powered fire safety insights and microgravity combustion physics synthesized from decades of NASA spaceflight investigations.
+                </p>
+
+                <!-- Prompt Input Box (Direct Interface from Design) -->
+                <div class="w-full max-w-[840px] bg-panel rounded-3xl border border-panel shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-5 md:p-6 mb-8 backdrop-blur-xl">
+                    <div class="flex flex-col gap-3">
+                        <textarea id="hero-prompt-input" 
+                                  maxlength="4000"
+                                  class="w-full bg-transparent border-none resize-none font-body-lg text-base text-on-surface placeholder:text-outline/70 focus:ring-0 min-h-[70px] outline-none" 
+                                  placeholder="Ask FlameAI anything about microgravity flame behavior, material flammability, or habitat safety..."></textarea>
+                        
+                        <div class="flex items-center justify-between pt-3 border-t border-panel">
+                            <div class="flex items-center gap-2 md:gap-3">
+                                <button onclick="quickPrompt('Why do flames become spherical in microgravity?')" class="px-3 py-1.5 rounded-full bg-panel hover:bg-panel-hover text-xs font-semibold text-on-surface-variant transition-colors border border-panel shadow-sm">
+                                    Spherical Flame
+                                </button>
+                                <button onclick="quickPrompt('What did SAFFIRE teach us about spacecraft fires?')" class="px-3 py-1.5 rounded-full bg-panel hover:bg-panel-hover text-xs font-semibold text-on-surface-variant transition-colors border border-panel shadow-sm">
+                                    SAFFIRE Tests
+                                </button>
+                            </div>
+                            
+                            <button onclick="handleHeroSubmit()" class="bg-primary hover:bg-primary/90 text-on-primary rounded-full w-11 h-11 flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+                                <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chips Row -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                    <button onclick="quickPrompt('Explain the cool-flame regime in FLEX-2')" class="bg-panel-soft text-on-surface border border-panel shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-panel-hover transition-colors backdrop-blur-md">❄️ Cool-Flame Regime</button>
+                    <button onclick="quickPrompt('Fire safety risk of PMMA in lunar 34% O2 atmosphere')" class="bg-panel-soft text-on-surface border border-panel shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-panel-hover transition-colors backdrop-blur-md">🌕 Lunar 34% O₂ Risk</button>
+                    <button onclick="quickPrompt('Why is Nomex safer than cotton in space habitats?')" class="bg-panel-soft text-on-surface border border-panel shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-panel-hover transition-colors backdrop-blur-md">🛡️ Nomex vs Cotton</button>
+                    <button onclick="quickPrompt('Why is cabin ventilation shutdown the first fire protocol?')" class="bg-panel-soft text-on-surface border border-panel shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-panel-hover transition-colors backdrop-blur-md">💨 Ventilation Shutdown</button>
+                </div>
+            </div>
+
+            <!-- Operational Metrics Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Ingested Experiments</span>
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">science</span>
+                        </div>
+                    </div>
+                    <div id="stat-experiments" class="text-4xl font-extrabold text-primary mb-1">12</div>
+                    <p class="text-xs text-on-surface-variant">BASS, ACME, SAFFIRE, FLEX, SoFIE</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Materials Tested</span>
+                        <div class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">category</span>
+                        </div>
+                    </div>
+                    <div id="stat-materials" class="text-4xl font-extrabold text-info mb-1">10</div>
+                    <p class="text-xs text-on-surface-variant">Polymers, fabrics, composites & fuels</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Key Physics Findings</span>
+                        <div class="w-8 h-8 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                        </div>
+                    </div>
+                    <div id="stat-findings" class="text-4xl font-extrabold text-success mb-1">18</div>
+                    <p class="text-xs text-on-surface-variant">Empirically validated combustion insights</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Safety Protocols</span>
+                        <div class="w-8 h-8 rounded-full bg-danger/10 flex items-center justify-center text-danger group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">verified</span>
+                        </div>
+                    </div>
+                    <div id="stat-guidelines" class="text-4xl font-extrabold text-danger mb-1">7</div>
+                    <p class="text-xs text-on-surface-variant">ISS, Lunar (0.16g) & Martian (0.38g) guidelines</p>
+                </div>
+            </div>
+
+            <!-- Mission Brief (live from /api/summary) -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-5">
+                    <div>
+                        <span class="font-label-caps text-[11px] text-primary font-bold tracking-widest">AI MISSION BRIEF</span>
+                        <h2 class="font-headline-lg text-2xl md:text-3xl font-bold text-on-surface mt-1">Fire Safety Intelligence Summary</h2>
+                    </div>
+                    <span id="brief-environment" class="inline-flex items-center gap-2 bg-primary/10 text-primary border border-primary/20 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider">
+                        <span class="material-symbols-outlined text-[14px]">rocket_launch</span>
+                        <span id="brief-environment-label">Exploration Atmosphere</span>
+                    </span>
+                </div>
+
+                <p id="brief-headline" class="text-sm md:text-base text-on-surface-variant leading-relaxed mb-6">
+                    Loading mission intelligence from the NASA combustion corpus…
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="rounded-2xl bg-panel border border-panel p-5">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Top-Ranked Experiment</span>
+                        <div id="brief-top-experiment" class="text-base font-extrabold text-on-surface mt-2">—</div>
+                        <p id="brief-top-experiment-detail" class="text-xs text-on-surface-variant mt-1">—</p>
+                    </div>
+                    <div class="rounded-2xl bg-panel border border-panel p-5">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Highest-Risk Material</span>
+                        <div id="brief-risk-material" class="text-base font-extrabold text-on-surface mt-2">—</div>
+                        <p id="brief-risk-material-detail" class="text-xs text-on-surface-variant mt-1">—</p>
+                    </div>
+                    <div class="rounded-2xl bg-panel border border-panel p-5">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant">Priority Directive</span>
+                        <div id="brief-priority-guideline" class="text-base font-extrabold text-on-surface mt-2">—</div>
+                        <p id="brief-priority-guideline-detail" class="text-xs text-on-surface-variant mt-1">—</p>
+                    </div>
+                </div>
+
+                <div id="brief-actions" class="space-y-2"></div>
+            </div>
+
+            <!-- Two Visual Feature Cards (Matching Section 3 & 4 from design file) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Feature 01: Chat / Interaction -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[460px]">
+                    <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                        <span class="font-label-caps text-xs text-on-surface-variant font-bold tracking-widest mb-4">FEATURE 01</span>
+                        <h3 class="font-headline-lg text-2xl md:text-3xl font-bold text-on-surface mb-4 leading-snug">
+                            Ask FlameAI: Grounded Graph-RAG Engine
+                        </h3>
+                        <p class="text-sm md:text-base text-on-surface-variant mb-6 leading-relaxed">
+                            Combines dense semantic vector retrieval with NetworkX knowledge graph traversal to provide factual, citation-backed answers from authentic NASA research.
+                        </p>
+                        <button onclick="switchTab('chat')" class="inline-flex items-center gap-2 bg-panel-strong border border-panel shadow-sm text-on-surface font-medium px-6 py-2.5 rounded-full w-fit hover:bg-panel-hover hover:scale-105 transition-all text-sm">
+                            Open Chat Interface
+                            <span class="material-symbols-outlined text-[18px]">chat</span>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 bg-gradient-to-br from-info/20 via-[#8B5CF6]/15 to-[#EC4899]/20 dark:from-info/10 dark:via-[#8B5CF6]/10 dark:to-[#EC4899]/10 p-6 flex items-center justify-center relative overflow-hidden border-t md:border-t-0 md:border-l border-panel">
+                        <div class="w-full bg-panel backdrop-blur-xl rounded-2xl border border-panel p-4 shadow-lg space-y-3">
+                            <div class="flex items-center gap-2 border-b border-divider pb-2">
+                                <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                                </div>
+                                <span class="text-xs font-bold text-on-surface">FlameAI Grounded Engine</span>
+                            </div>
+                            <div class="bg-panel-strong rounded-xl p-3 text-xs text-on-surface-variant leading-relaxed">
+                                "In microgravity (0g), buoyant convection is eliminated. Flames become spherical, soot aggregate chains grow larger, and ventilation fan shutdown is the primary containment directive."
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] text-on-surface-variant/80 pt-1">
+                                <span>Source: FLEX & BASS-II</span>
+                                <span class="text-primary font-bold">100% Grounded</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 02: Space Telemetry & Safety -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[460px]">
+                    <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                        <span class="font-label-caps text-xs text-on-surface-variant font-bold tracking-widest mb-4">FEATURE 02</span>
+                        <h3 class="font-headline-lg text-2xl md:text-3xl font-bold text-on-surface mb-4 leading-snug">
+                            Multi-Environment Habitat Fire Risk Scorer
+                        </h3>
+                        <p class="text-sm md:text-base text-on-surface-variant mb-6 leading-relaxed">
+                            Evaluate material flammability shifts across varying gravities and exploration atmospheres (34% O₂ at 56.5 kPa) with automated engineering containment recommendations.
+                        </p>
+                        <button onclick="switchTab('safety')" class="inline-flex items-center gap-2 bg-panel-strong border border-panel shadow-sm text-on-surface font-medium px-6 py-2.5 rounded-full w-fit hover:bg-panel-hover hover:scale-105 transition-all text-sm">
+                            Calculate Risk
+                            <span class="material-symbols-outlined text-[18px]">shield</span>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 bg-gradient-to-br from-warning/20 via-danger/15 to-[#E11D48]/20 dark:from-warning/10 dark:via-danger/10 dark:to-[#E11D48]/10 p-6 flex items-center justify-center relative overflow-hidden border-t md:border-t-0 md:border-l border-panel">
+                        <div class="w-full bg-panel-strong backdrop-blur-xl rounded-2xl border border-panel p-5 shadow-lg space-y-4">
+                            <div class="flex items-center justify-between border-b border-divider pb-3">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-[18px]">speed</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs font-bold text-on-surface">Lunar Habitat Assessment</span>
+                                        <span class="text-[9px] uppercase font-bold text-on-surface-variant">34% O₂ Exploration Mix</span>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full bg-danger/10 text-danger text-[10px] font-bold">HIGH RISK</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span>PMMA Plexiglass Flammability</span>
+                                    <span class="text-primary font-bold">Score: 44/100</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-divider rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full w-[44%]"></div>
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-on-surface-variant flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[14px] text-success">check_circle</span>
+                                <span>Re-qualification under NASA STD-6001 required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-card rounded-3xl p-6 md:p-8">
+                    <h3 class="text-lg font-bold text-on-surface mb-2">Experiments by NASA Program</h3>
+                    <p class="text-xs text-on-surface-variant mb-6">Distribution across Solid, Gaseous, Droplet, and Large-Scale categories</p>
+                    <div class="h-[280px]">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 md:p-8">
+                    <h3 class="text-lg font-bold text-on-surface mb-2">Spacecraft Materials Studied</h3>
+                    <p class="text-xs text-on-surface-variant mb-6">Polymers, fabrics, composites, foams, and liquid fuels</p>
+                    <div class="h-[280px]">
+                        <canvas id="materialsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Findings Feed -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-on-surface">Empirical Findings Feed</h3>
+                        <p class="text-xs text-on-surface-variant">Published microgravity combustion observations from ISS & Cygnus missions</p>
+                    </div>
+                    <button onclick="switchTab('explorer')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                        View All Experiments <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </button>
+                </div>
+
+                <div id="findings-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated via API -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 2: CHAT (Graph-RAG)                                           -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-chat" class="tab-view hidden">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="flex items-center justify-between pb-2 border-b border-divider">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">FlameAI Assistant</h2>
+                        <p class="text-xs md:text-sm text-on-surface-variant">Multi-turn Graph-RAG conversational agent grounded in NASA microgravity combustion repositories</p>
+                    </div>
+                    <button onclick="clearChatMemory()" class="px-4 py-1.5 rounded-full bg-panel-strong hover:bg-panel-hover text-xs font-semibold text-on-surface-variant border border-panel shadow-sm transition-all flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                        Clear Chat
+                    </button>
+                </div>
+
+                <!-- Chat Box -->
+                <div class="glass-card rounded-3xl p-4 md:p-6 min-h-[550px] flex flex-col justify-between shadow-xl">
+                    <!-- Messages List -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 pr-2 max-h-[520px]">
+                        <!-- Welcome message -->
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-panel flex items-center justify-center text-primary font-bold shadow-sm">
+                                <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                            </div>
+                            <div class="flex-1 bg-panel-strong backdrop-blur-md rounded-2xl rounded-tl-none p-4 border border-panel shadow-sm text-sm text-on-surface space-y-2">
+                                <p class="font-bold text-primary">FlameAI Operational Intelligence</p>
+                                <p>Welcome! I am specialized in microgravity combustion science and spacecraft fire safety protocols. You can ask me about:</p>
+                                <ul class="list-disc list-inside text-on-surface-variant space-y-1">
+                                    <li>NASA experiments: <b>BASS, ACME, SAFFIRE, FLEX, SoFIE, SPICE</b></li>
+                                    <li>Physics phenomena: <b>flame sphericity, cool flame regimes, soot agglomeration</b></li>
+                                    <li>Material ratings: <b>Nomex, PMMA, silicone, Teflon, Limiting Oxygen Index (LOI)</b></li>
+                                    <li>Habitat safety for <b>ISS (0g), Lunar (0.16g), and Martian (0.38g)</b> modules</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Bar -->
+                    <div class="pt-4 mt-4 border-t border-panel">
+                        <div class="flex items-center gap-2 bg-panel-strong rounded-full border border-panel p-1.5 shadow-md">
+                            <input id="chat-input-field" 
+                                   type="text" 
+                                   maxlength="4000"
+                                   class="flex-1 bg-transparent border-none px-4 text-sm text-on-surface focus:ring-0 outline-none" 
+                                   placeholder="Ask FlameAI a question (e.g., Why do flames become spherical in microgravity?)..." 
+                                   onkeydown="if(event.key === 'Enter') sendChatMessage();">
+                            
+                            <button onclick="sendChatMessage()" class="w-10 h-10 rounded-full bg-primary hover:bg-primary/90 text-on-primary flex items-center justify-center shadow-sm transition-transform active:scale-90">
+                                <span class="material-symbols-outlined text-[18px]">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 3: EXPLORER                                                  -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-explorer" class="tab-view hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-divider">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">NASA Combustion Experiment Explorer</h2>
+                    <p class="text-xs md:text-sm text-on-surface-variant">Browse, filter, and inspect detailed parameters from published flight experiments</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <input id="exp-search-input" 
+                           type="text" 
+                           class="bg-panel-strong border border-panel rounded-full px-4 py-2 text-xs md:text-sm text-on-surface placeholder:text-outline/70 focus:ring-0 outline-none shadow-sm" 
+                           placeholder="Search experiments..." 
+                           oninput="filterExperiments()">
+
+                    <select id="exp-category-select" 
+                            class="bg-panel-strong border border-panel rounded-full px-4 py-2 text-xs md:text-sm text-on-surface focus:ring-0 outline-none shadow-sm cursor-pointer" 
+                            onchange="filterExperiments()">
+                        <option value="All Categories">All Categories</option>
+                    </select>
+
+                    <select id="exp-platform-select" 
+                            class="bg-panel-strong border border-panel rounded-full px-4 py-2 text-xs md:text-sm text-on-surface focus:ring-0 outline-none shadow-sm cursor-pointer" 
+                            onchange="filterExperiments()">
+                        <option value="All Platforms">All Platforms</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Experiments Grid -->
+            <div id="experiments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 4: COMPARISON                                                -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-compare" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-divider">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Side-by-Side Experiment Comparison</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">Multi-parametric combustion profile comparison with 5-axis polar radar chart</p>
+            </div>
+
+            <!-- Experiment Selectors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-4">
+                    <label class="block text-xs font-bold text-primary uppercase tracking-wider mb-2">Experiment 1 (Orange)</label>
+                    <select id="compare-exp1-select" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-0 outline-none" onchange="runComparison()">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <label class="block text-xs font-bold text-info uppercase tracking-wider mb-2">Experiment 2 (Blue)</label>
+                    <select id="compare-exp2-select" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-0 outline-none" onchange="runComparison()">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Chart & Table Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="lg:col-span-6 glass-card rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center">
+                    <h3 class="text-base font-bold text-on-surface mb-4">5-Axis Combustion Profile Radar</h3>
+                    <div class="w-full max-w-[420px] aspect-square">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Metrics Table -->
+                <div class="lg:col-span-6 glass-card rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-base font-bold text-on-surface">Metric Scorecard (0 - 10 scale)</h3>
+                    <div id="compare-table-container" class="overflow-x-auto">
+                        <!-- Table rendered via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 5: SAFETY & RISK                                             -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-safety" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-divider">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Space Habitat Fire Safety Risk Scorer</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">Assess material flammability and risk profiles across microgravity and reduced-gravity environments</p>
+            </div>
+
+            <!-- Inputs Card -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Target Material</label>
+                        <select id="scorer-material" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="Nomex® Blend">Nomex® Blend</option>
+                            <option value="Teflon (PTFE)">Teflon (PTFE)</option>
+                            <option value="Kapton Film">Kapton Film</option>
+                            <option value="Silicone Composite">Silicone Composite</option>
+                            <option value="Epoxy Composite">Epoxy Composite</option>
+                            <option value="PMMA (Acrylic)">PMMA (Acrylic)</option>
+                            <option value="Nylon-6">Nylon-6</option>
+                            <option value="Cotton Fabric">Cotton Fabric</option>
+                            <option value="Polyethylene">Polyethylene</option>
+                            <option value="Velcro® Strips">Velcro® Strips</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Mission Environment</label>
+                        <select id="scorer-env" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="ISS (LEO - Microgravity)">ISS (LEO - 0g)</option>
+                            <option value="Lunar Habitat (0.16g)">Lunar Habitat (0.16g)</option>
+                            <option value="Martian Habitat (0.38g)">Martian Habitat (0.38g)</option>
+                            <option value="Deep-Space Transit">Deep-Space Transit</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Oxygen (O₂) Concentration</label>
+                        <select id="scorer-o2" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="16%">16% (Depleted)</option>
+                            <option value="18%">18%</option>
+                            <option value="20.9% (Standard)" selected>20.9% (Standard ISS / Earth)</option>
+                            <option value="24%">24%</option>
+                            <option value="30%">30%</option>
+                            <option value="34% (Exploration)">34% (Exploration Atmosphere)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="calculateSafetyScore()" class="w-full bg-primary hover:bg-primary/90 text-on-primary font-bold py-2.5 px-6 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">search</span>
+                        <span>Analyse Risk</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Risk Calculation Result Card -->
+            <div id="risk-result-container" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Gauge Card -->
+                <div class="lg:col-span-4 glass-card rounded-3xl p-8 flex flex-col items-center justify-center text-center">
+                    <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Calculated Safety Score</span>
+                    <div id="result-score-val" class="text-7xl font-extrabold text-success my-3">85</div>
+                    <span class="text-xs text-on-surface-variant">Out of 100</span>
+                    <div class="mt-4">
+                        <span id="result-risk-badge" class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-success/20 text-success border border-success/30">LOW RISK</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Details -->
+                <div class="lg:col-span-8 glass-card rounded-3xl p-8 space-y-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-danger uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">warning</span>
+                            Key Risk Factors
+                        </h4>
+                        <ul id="result-factors-list" class="text-xs md:text-sm text-on-surface-variant space-y-1.5 list-disc list-inside">
+                            <li>Inherently flame-resistant aromatic polyamide structure</li>
+                            <li>Self-extinguishes in microgravity under nominal airflow</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-divider">
+                        <h4 class="text-xs font-bold text-success uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">verified</span>
+                            Engineering Recommendations
+                        </h4>
+                        <p id="result-recs-text" class="text-xs md:text-sm text-on-surface leading-relaxed">
+                            Approved for general flight crew garments and cargo wraps in ISS environments. Re-qualification required if transitioning to exploration hyperoxic low-pressure atmosphere.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ranked Materials Table -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <h3 class="text-lg font-bold text-on-surface mb-2">Spacecraft Materials Ranked by Fire Safety Score</h3>
+                <p class="text-xs text-on-surface-variant mb-6">Comparative safety ratings across orbital, lunar, and Martian platforms</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm">
+                        <thead>
+                            <tr class="border-b border-divider-strong text-on-surface-variant uppercase text-[10px] font-bold">
+                                <th class="py-3 px-4">Material</th>
+                                <th class="py-3 px-4">ISS (0g)</th>
+                                <th class="py-3 px-4">Lunar (0.16g)</th>
+                                <th class="py-3 px-4">Martian (0.38g)</th>
+                                <th class="py-3 px-4">Risk Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranked-table-body" class="divide-y divide-divider text-on-surface">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 6: GRAPH                                                     -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-graph" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-divider">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Microgravity Combustion Knowledge Graph</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">NetworkX entity relationship map connecting Experiments, Materials, Findings, and Safety Directives</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Graph Visualization Canvas -->
+                <div class="lg:col-span-8 glass-card rounded-3xl p-6 md:p-8 flex flex-col justify-between min-h-[500px]">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Entity Web (Canvas)</span>
+                        <div class="flex items-center gap-3 text-xs">
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> Exp</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-info inline-block"></span> Mat</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-success inline-block"></span> Find</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-danger inline-block"></span> Safety</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full relative bg-panel-soft rounded-2xl border border-panel p-4 min-h-[420px] flex items-center justify-center">
+                        <canvas id="graphCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Node Inspector -->
+                <div class="lg:col-span-4 glass-card rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-base font-bold text-on-surface">Node Inspector</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Select Graph Node</label>
+                        <select id="graph-node-select" class="w-full bg-panel-strong border border-panel rounded-xl px-4 py-2.5 text-xs text-on-surface focus:ring-0 outline-none" onchange="inspectGraphNode()">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div id="graph-node-details" class="space-y-4 pt-2 border-t border-divider text-xs">
+                        <p class="text-on-surface-variant">Select an entity from the dropdown to inspect its relationships and connected flight parameters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── FOOTER (Matching Design from spfrount) ── -->
+    <footer class="w-full py-12 text-on-surface-variant text-xs border-t border-divider bg-panel-soft backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
+                <span class="font-bold text-on-surface">Flame in Freefall</span>
+                <span class="text-on-surface-variant">| NASA International Space Apps Challenge 2026</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span>Team Eagle20 (Haldwani, India)</span>
+                <span>•</span>
+                <span>Cross-Platform PWA & Desktop Ready</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ── APPLICATION CONTROLLER JAVASCRIPT ── -->
+    <script>
+        // State
+        let allExperiments = [];
+        let statsData = {};
+        let categoryChart = null;
+        let materialsChart = null;
+        let radarChart = null;
+        let graphNodes = [];
+        let graphEdges = [];
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`view-${tabId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+
+            // Update nav item highlighting (exact nomenclature preserved)
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('text-primary', 'font-bold');
+                el.classList.add('text-on-surface-variant', 'font-medium');
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-on-surface-variant', 'font-medium');
+                activeNav.classList.add('text-primary', 'font-bold');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (tabId === 'compare' && !radarChart) {
+                setTimeout(runComparison, 100);
+            } else if (tabId === 'graph') {
+                setTimeout(drawGraphCanvas, 100);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Quick Prompt
+        function quickPrompt(promptText) {
+            switchTab('chat');
+            const input = document.getElementById('chat-input-field');
+            if (input) {
+                input.value = promptText;
+                sendChatMessage();
+            }
+        }
+
+        function handleHeroSubmit() {
+            const prompt = document.getElementById('hero-prompt-input').value.trim();
+            if (prompt) {
+                quickPrompt(prompt);
+                document.getElementById('hero-prompt-input').value = '';
+            }
+        }
+
+        // API Fetchers
+        async function loadMissionBrief() {
+            try {
+                const res = await fetch('/api/summary');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const brief = await res.json();
+
+                document.getElementById('brief-headline').textContent = brief.headline || '';
+
+                const envLabel = document.getElementById('brief-environment-label');
+                if (brief.generated_for) {
+                    envLabel.textContent = brief.generated_for;
+                }
+
+                const exp = brief.top_experiment;
+                if (exp) {
+                    document.getElementById('brief-top-experiment').textContent = exp.name || exp.acronym || '—';
+                    document.getElementById('brief-top-experiment-detail').textContent =
+                        `${exp.score}/100 · ${exp.category || 'General'} · ${exp.years || 'flight data'}`;
+                }
+
+                const risk = brief.highest_risk_material;
+                if (risk) {
+                    document.getElementById('brief-risk-material').textContent = risk.name || '—';
+                    const reasons = (risk.reasons || []).slice(0, 2).join(' · ');
+                    document.getElementById('brief-risk-material-detail').textContent =
+                        `${risk.score}/100 risk · ${risk.risk_level}${reasons ? ' · ' + reasons : ''}`;
+                }
+
+                const guideline = brief.priority_guideline;
+                if (guideline) {
+                    document.getElementById('brief-priority-guideline').textContent = guideline.title || '—';
+                    document.getElementById('brief-priority-guideline-detail').textContent =
+                        `${guideline.category || 'Safety'} · priority ${guideline.priority ?? '—'} · ${guideline.risk_level || ''}`;
+                }
+
+                const actions = brief.priority_actions || [];
+                document.getElementById('brief-actions').innerHTML = actions.map((action, index) => `
+                    <div class="flex items-start gap-3 rounded-xl bg-panel-soft border border-panel px-4 py-3">
+                        <span class="shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-[11px] font-bold flex items-center justify-center">${index + 1}</span>
+                        <div>
+                            <p class="text-xs font-bold text-on-surface">${escapeHtml(action.title || 'Safety action')}</p>
+                            <p class="text-[11px] text-on-surface-variant leading-relaxed">${escapeHtml(action.action || '')}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.warn('Mission brief unavailable:', err);
+                document.getElementById('brief-headline').textContent =
+                    'Mission brief is temporarily unavailable. The underlying NASA datasets remain searchable in the Chat and Explorer views.';
+            }
+        }
+
+        async function loadInitialData() {
+            try {
+                // Fetch stats
+                const resStats = await fetch('/api/stats');
+                statsData = await resStats.json();
+                
+                document.getElementById('stat-experiments').textContent = statsData.total_experiments || 12;
+                document.getElementById('stat-materials').textContent = statsData.materials_tested || 10;
+                document.getElementById('stat-findings').textContent = statsData.key_findings || 18;
+                document.getElementById('stat-guidelines').textContent = statsData.safety_guidelines || 7;
+
+                initDashboardCharts(statsData.categories || {}, statsData.material_types || {});
+
+                // Fetch experiments
+                const resExps = await fetch('/api/experiments');
+                const expsData = await resExps.json();
+                allExperiments = expsData.experiments || [];
+                populateExplorerFilters();
+                renderExperimentsGrid(allExperiments);
+                populateComparisonSelects();
+
+                // Fetch findings
+                const resFind = await fetch('/api/findings');
+                const findData = await resFind.json();
+                renderFindingsFeed(findData.findings || []);
+
+                // Mission brief (rankings + recommended actions)
+                loadMissionBrief();
+
+                // Fetch graph
+                const resGraph = await fetch('/api/graph');
+                const gData = await resGraph.json();
+                graphNodes = gData.nodes || [];
+                graphEdges = gData.edges || [];
+                populateGraphSelect();
+
+                // Run default safety score
+                calculateSafetyScore();
+            } catch (err) {
+                console.error("Error loading data:", err);
+            }
+        }
+
+        // Theme helpers
+        function currentTheme() {
+            return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        function chartPalette() {
+            const dark = currentTheme() === 'dark';
+            const css = getComputedStyle(document.documentElement);
+            const read = (name, fallback) => (css.getPropertyValue(name).trim() || fallback);
+            return {
+                text: read('--chart-text', dark ? '#94a3b8' : '#555555'),
+                grid: read('--chart-grid', dark ? 'rgba(148,163,184,0.14)' : 'rgba(0,0,0,0.06)'),
+                border: read('--chart-border', dark ? '#0f172a' : '#ffffff'),
+                edge: read('--canvas-edge', dark ? 'rgba(148,163,184,0.18)' : 'rgba(0,0,0,0.09)'),
+                label: read('--canvas-label', dark ? '#cbd5e1' : '#111827'),
+                nodeStroke: read('--canvas-node-stroke', dark ? '#0b1220' : '#ffffff'),
+                primary: dark ? '#ff7a5c' : '#FF5E3A',
+                info: dark ? '#60a5fa' : '#3B82F6',
+                success: dark ? '#4ade80' : '#22C55E',
+                danger: dark ? '#f87171' : '#EF4444',
+                warning: dark ? '#fbbf24' : '#F59E0B',
+                purple: '#A855F7',
+            };
+        }
+
+        function syncThemeUI(theme) {
+            const dark = theme === 'dark';
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                toggle.setAttribute('aria-checked', String(dark));
+                toggle.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
+                toggle.setAttribute('title', dark ? 'Switch to light mode' : 'Switch to dark mode');
+            }
+            const knobIcon = document.getElementById('theme-knob-icon');
+            if (knobIcon) knobIcon.textContent = dark ? 'dark_mode' : 'light_mode';
+            const mobileLabel = document.getElementById('mobile-theme-label');
+            if (mobileLabel) mobileLabel.textContent = dark ? 'Dark mode' : 'Light mode';
+            const meta = document.getElementById('meta-theme-color');
+            if (meta) meta.setAttribute('content', dark ? '#070c16' : '#ffffff');
+        }
+
+        function refreshThemeCharts() {
+            if (!statsData || !statsData.categories) return;
+            initDashboardCharts(statsData.categories || {}, statsData.material_types || {});
+            if (radarChart) runComparison();
+            if (graphNodes.length) drawGraphCanvas();
+        }
+
+        function toggleTheme() {
+            const next = currentTheme() === 'dark' ? 'light' : 'dark';
+            document.documentElement.classList.remove('light', 'dark');
+            document.documentElement.classList.add(next);
+            document.documentElement.dataset.theme = next;
+            try { localStorage.setItem('flame-theme', next); } catch (e) {}
+            syncThemeUI(next);
+            setTimeout(refreshThemeCharts, 80);
+        }
+
+        // Dashboard Charts
+        function initDashboardCharts(categories, matTypes) {
+            const p = chartPalette();
+            const ctx1 = document.getElementById('categoryChart').getContext('2d');
+            const catLabels = Object.keys(categories);
+            const catValues = Object.values(categories);
+
+            if (categoryChart) categoryChart.destroy();
+            categoryChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: catLabels,
+                    datasets: [{
+                        data: catValues,
+                        backgroundColor: [p.primary, p.info, p.success, p.purple, p.danger, p.warning],
+                        borderRadius: 8,
+                        barThickness: 28,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { backgroundColor: p.border, titleColor: p.label, bodyColor: p.text, borderColor: p.grid, borderWidth: 1 }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: p.grid }, ticks: { color: p.text } },
+                        x: { grid: { display: false }, ticks: { color: p.text } }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('materialsChart').getContext('2d');
+            const matLabels = Object.keys(matTypes);
+            const matValues = Object.values(matTypes);
+
+            if (materialsChart) materialsChart.destroy();
+            materialsChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: matLabels,
+                    datasets: [{
+                        data: matValues,
+                        backgroundColor: [p.info, p.primary, p.success, p.purple, p.danger],
+                        borderWidth: 2,
+                        borderColor: p.border,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, color: p.text, font: { size: 11 } } },
+                        tooltip: { backgroundColor: p.border, titleColor: p.label, bodyColor: p.text, borderColor: p.grid, borderWidth: 1 }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Findings Feed
+        function renderFindingsFeed(findings) {
+            const container = document.getElementById('findings-container');
+            container.innerHTML = '';
+            findings.slice(0, 6).forEach(f => {
+                const title = f.title || f.name || 'NASA Observation';
+                const source = f.source_experiment || 'NASA Combustion';
+                const desc = f.description || '';
+                
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-5 border-l-4 border-l-primary hover:shadow-md transition-shadow';
+                card.innerHTML = `
+                    <div class="text-[11px] font-bold text-primary uppercase tracking-wider mb-1">🚀 ${source}</div>
+                    <div class="font-bold text-sm text-on-surface mb-2">${title}</div>
+                    <div class="text-xs text-on-surface-variant line-clamp-3">${desc}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Explorer
+        function populateExplorerFilters() {
+            const catSelect = document.getElementById('exp-category-select');
+            const platSelect = document.getElementById('exp-platform-select');
+            
+            const cats = new Set(allExperiments.map(e => e.category).filter(Boolean));
+            const plats = new Set(allExperiments.map(e => e.platform).filter(Boolean));
+
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c;
+                catSelect.appendChild(opt);
+            });
+
+            plats.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                platSelect.appendChild(opt);
+            });
+        }
+
+        function filterExperiments() {
+            const q = document.getElementById('exp-search-input').value.toLowerCase();
+            const cat = document.getElementById('exp-category-select').value;
+            const plat = document.getElementById('exp-platform-select').value;
+
+            const filtered = allExperiments.filter(e => {
+                const matchesQ = !q || (
+                    (e.name && e.name.toLowerCase().includes(q)) ||
+                    (e.description && e.description.toLowerCase().includes(q)) ||
+                    (e.materials_tested && e.materials_tested.some(m => m.toLowerCase().includes(q)))
+                );
+                const matchesCat = (cat === 'All Categories') || (e.category === cat);
+                const matchesPlat = (plat === 'All Platforms') || (e.platform === plat);
+                return matchesQ && matchesCat && matchesPlat;
+            });
+
+            renderExperimentsGrid(filtered);
+        }
+
+        function renderExperimentsGrid(experiments) {
+            const grid = document.getElementById('experiments-grid');
+            grid.innerHTML = '';
+
+            if (experiments.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-on-surface-variant">No matching NASA experiments found.</div>`;
+                return;
+            }
+
+            experiments.forEach(e => {
+                const name = e.name || 'Experiment';
+                const platform = e.platform || 'ISS';
+                const cat = e.category || 'General';
+                const desc = e.description || '';
+                const mats = (e.materials_tested || []).join(', ') || 'Solid/gaseous fuels';
+                const findings = e.key_findings || [];
+                const safety = e.safety_implications || [];
+                const params = e.parameters || {};
+                const fmtParam = (label, p) => {
+                    if (!p) return '';
+                    let val = '';
+                    if (p.value !== undefined) val = `${p.value} ${p.unit || ''}`;
+                    else if (p.min !== undefined && p.max !== undefined) val = `${p.min}–${p.max} ${p.unit || ''}`;
+                    else if (p.min !== undefined) val = `≥ ${p.min} ${p.unit || ''}`;
+                    else if (p.max !== undefined) val = `≤ ${p.max} ${p.unit || ''}`;
+                    if (!val) return '';
+                    return `<span class="bg-panel-strong border border-panel rounded-full px-2 py-0.5 text-[10px] font-semibold text-on-surface-variant">${escapeHtml(label)}: ${escapeHtml(val)}</span>`;
+                };
+                const paramTags = [
+                    fmtParam('O₂', params.oxygen_concentration),
+                    fmtParam('Pressure', params.pressure),
+                    fmtParam('Flow', params.flow_velocity || params.coflow_velocity),
+                ].filter(Boolean).join(' ');
+
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition-all border border-panel';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-primary/10 text-primary uppercase tracking-wider">${cat}</span>
+                            <span class="text-xs font-semibold text-on-surface-variant">${platform}</span>
+                        </div>
+                        <h3 class="font-bold text-base text-on-surface">${name}</h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">${desc}</p>
+                        
+                        <div class="pt-2 text-[11px] text-on-surface-variant">
+                            <span class="font-bold text-on-surface">Materials:</span> ${escapeHtml(mats)}
+                        </div>
+
+                        ${paramTags ? `<div class="flex flex-wrap gap-1.5 pt-1">${paramTags}</div>` : ''}
+                    </div>
+
+                    ${findings.length > 0 ? `
+                        <div class="mt-4 pt-3 border-t border-divider text-xs">
+                            <span class="font-bold text-success block mb-1">Key Finding:</span>
+                            <p class="text-on-surface-variant text-[11px] line-clamp-2">${findings[0]}</p>
+                        </div>
+                    ` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Comparison View
+        function populateComparisonSelects() {
+            const s1 = document.getElementById('compare-exp1-select');
+            const s2 = document.getElementById('compare-exp2-select');
+            s1.innerHTML = '';
+            s2.innerHTML = '';
+
+            allExperiments.forEach((e, idx) => {
+                const opt1 = new Option(e.name, e.name, idx === 0, idx === 0);
+                const opt2 = new Option(e.name, e.name, idx === 1, idx === 1);
+                s1.add(opt1);
+                s2.add(opt2);
+            });
+        }
+
+        async function runComparison() {
+            const e1 = document.getElementById('compare-exp1-select').value || 'SAFFIRE';
+            const e2 = document.getElementById('compare-exp2-select').value || 'BASS';
+
+            const res = await fetch(`/api/compare?e1=${encodeURIComponent(e1)}&e2=${encodeURIComponent(e2)}`);
+            const comp = await res.json();
+
+            const m1 = comp.exp1.metrics;
+            const m2 = comp.exp2.metrics;
+
+            const labels = ['Flame Spread', 'Extinction Time', 'Soot Yield', 'Heat Release', 'Safety Score'];
+            const data1 = [m1.flame_spread, m1.extinction_time, m1.soot_yield, m1.heat_release, m1.safety_score];
+            const data2 = [m2.flame_spread, m2.extinction_time, m2.soot_yield, m2.heat_release, m2.safety_score];
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            const p = chartPalette();
+            if (radarChart) {
+                radarChart.destroy();
+            }
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: comp.exp1.name.slice(0, 22),
+                            data: data1,
+                            backgroundColor: 'rgba(255, 94, 58, 0.2)',
+                            borderColor: p.primary,
+                            borderWidth: 2,
+                            pointBackgroundColor: p.primary,
+                        },
+                        {
+                            label: comp.exp2.name.slice(0, 22),
+                            data: data2,
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: p.info,
+                            borderWidth: 2,
+                            pointBackgroundColor: p.info,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 10,
+                            ticks: { display: false, stepSize: 2 },
+                            grid: { color: p.grid },
+                            angleLines: { color: p.grid },
+                            pointLabels: { color: p.text, font: { size: 10, weight: '600' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, color: p.text, font: { size: 11 } } },
+                        tooltip: { backgroundColor: p.border, titleColor: p.label, bodyColor: p.text, borderColor: p.grid, borderWidth: 1 }
+                    }
+                }
+            });
+
+            // Scorecard Table
+            const tbl = document.getElementById('compare-table-container');
+            tbl.innerHTML = `
+                <table class="w-full text-left border-collapse text-xs md:text-sm">
+                    <thead>
+                        <tr class="border-b border-divider-strong text-on-surface-variant uppercase text-[10px] font-bold">
+                            <th class="py-2.5 px-3">Parameter</th>
+                            <th class="py-2.5 px-3 text-primary">${comp.exp1.name.slice(0, 20)}</th>
+                            <th class="py-2.5 px-3 text-info">${comp.exp2.name.slice(0, 20)}</th>
+                            <th class="py-2.5 px-3">Δ (Exp 1 − Exp 2)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-divider text-on-surface">
+                        ${labels.map((l, i) => {
+                            const delta = data1[i] - data2[i];
+                            const deltaLabel = `${delta > 0 ? '+' : ''}${delta.toFixed(1)}`;
+                            const deltaClass = delta > 0 ? 'text-success' : (delta < 0 ? 'text-danger' : 'text-on-surface-variant');
+                            return `
+                            <tr>
+                                <td class="py-2.5 px-3 font-medium">${l}</td>
+                                <td class="py-2.5 px-3 font-bold text-primary">${data1[i]} / 10</td>
+                                <td class="py-2.5 px-3 font-bold text-info">${data2[i]} / 10</td>
+                                <td class="py-2.5 px-3 font-bold ${deltaClass}">${deltaLabel}</td>
+                            </tr>
+                        `; }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Safety Scorer
+        async function calculateSafetyScore() {
+            const material = document.getElementById('scorer-material').value;
+            const environment = document.getElementById('scorer-env').value;
+            const oxygen_level = document.getElementById('scorer-o2').value;
+
+            try {
+                const res = await fetch('/api/score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ material, environment, oxygen_level })
+                });
+                const data = await res.json();
+
+                // Update score card
+                const scoreVal = document.getElementById('result-score-val');
+                scoreVal.textContent = data.score;
+                scoreVal.style.color = data.risk_color;
+
+                const badge = document.getElementById('result-risk-badge');
+                badge.textContent = `${data.risk_level} RISK`;
+                badge.style.color = data.risk_color;
+                badge.style.backgroundColor = `${data.risk_color}20`;
+                badge.style.borderColor = `${data.risk_color}40`;
+
+                // Update factors
+                const factorsList = document.getElementById('result-factors-list');
+                factorsList.innerHTML = data.factors.map(f => `<li>${f}</li>`).join('');
+
+                // Update recommendations
+                document.getElementById('result-recs-text').textContent = data.recommendations;
+
+                // Update ranked table
+                const tbody = document.getElementById('ranked-table-body');
+                tbody.innerHTML = data.ranked_table.map(row => `
+                    <tr class="hover:bg-panel-hover transition-colors">
+                        <td class="py-3 px-4 font-bold">${row.material}</td>
+                        <td class="py-3 px-4">${row.iss}</td>
+                        <td class="py-3 px-4">${row.lunar}</td>
+                        <td class="py-3 px-4">${row.martian}</td>
+                        <td class="py-3 px-4 font-bold text-xs ${row.risk === 'LOW' ? 'text-success' : (row.risk === 'MODERATE' ? 'text-warning' : 'text-danger')}">${row.risk}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error("Error scoring:", err);
+            }
+        }
+
+        // Chat
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+        }
+
+        const NASA_WARNING = "Warning: This answer is not from the database of NASA.";
+
+        function resolveSourceUrl(source) {
+            if (source && typeof source === 'object' && typeof source.url === 'string' && source.url.startsWith('http')) {
+                return source.url;
+            }
+            const label = String(source && typeof source === 'object' ? (source.title || '') : (source || '')).toLowerCase();
+            if (label.includes('1gnufsb96') || label.includes('challenge brief') || label.includes('google doc')) {
+                return 'https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit';
+            }
+            if (label.includes('bass')) return 'https://psi.nasa.gov/investigation/BASS';
+            if (label.includes('acme')) return 'https://psi.nasa.gov/investigation/ACME';
+            if (label.includes('saffire')) return 'https://ntrs.nasa.gov/citations/20160005234';
+            if (label.includes('flex')) return 'https://psi.nasa.gov/investigation/FLEX';
+            if (label.includes('sofie')) return 'https://psi.nasa.gov/investigation/SoFIE';
+            if (label.includes('spice')) return 'https://psi.nasa.gov/investigation/SPICE';
+            if (label.includes('material') || label.includes('polymer') || label.includes('flammability') ||
+                label.includes('guideline') || label.includes('safety') || label.includes('std-6001')) {
+                return 'https://standards.nasa.gov/standard/nasa/nasa-std-6001';
+            }
+            return null;
+        }
+
+        function renderMarkdown(text) {
+            const escaped = escapeHtml(text || '');
+            const lines = escaped.split('\n');
+            const out = [];
+            let listType = null;
+            const inline = (s) => s
+                .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+                .replace(/(^|[^*])\*([^*\n]+)\*/g, '$1<em>$2</em>')
+                .replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-divider text-[12px]">$1</code>')
+                .replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold underline hover:text-primary/80">$1</a>');
+            const closeList = () => {
+                if (listType) { out.push(listType === 'ul' ? '</ul>' : '</ol>'); listType = null; }
+            };
+
+            lines.forEach(rawLine => {
+                const line = rawLine.trim();
+                if (!line) { closeList(); out.push('<div class="h-1"></div>'); return; }
+                if (/^#{1,4}\s+/.test(line)) {
+                    closeList();
+                    out.push(`<p class="font-bold text-primary">${inline(line.replace(/^#{1,4}\s+/, ''))}</p>`);
+                    return;
+                }
+                const bullet = line.match(/^[-*•]\s+(.*)$/);
+                if (bullet) {
+                    if (listType !== 'ul') { closeList(); out.push('<ul class="list-disc list-inside space-y-1 ml-1">'); listType = 'ul'; }
+                    out.push(`<li>${inline(bullet[1])}</li>`);
+                    return;
+                }
+                const numbered = line.match(/^\d+[.)]\s+(.*)$/);
+                if (numbered) {
+                    if (listType !== 'ol') { closeList(); out.push('<ol class="list-decimal list-inside space-y-1 ml-1">'); listType = 'ol'; }
+                    out.push(`<li>${inline(numbered[1])}</li>`);
+                    return;
+                }
+                closeList();
+                out.push(`<p>${inline(line)}</p>`);
+            });
+            closeList();
+            return out.join('');
+        }
+
+        function splitScopeWarning(text) {
+            const idx = text.indexOf(NASA_WARNING);
+            if (idx === -1) return { body: text, warning: '' };
+            return { body: text.slice(0, idx).trimEnd(), warning: NASA_WARNING };
+        }
+
+        function warningBadgeHtml() {
+            return `<div class="warning-panel mt-3 flex items-start gap-2 rounded-xl px-3 py-2 text-[11px] font-semibold">
+                        <span class="material-symbols-outlined text-[16px]">warning</span>
+                        <span>${escapeHtml(NASA_WARNING)}</span>
+                    </div>`;
+        }
+
+        function sourcesBadgesHtml(sources) {
+            if (!sources || sources.length === 0) return '';
+            const badges = sources.map(source => {
+                const title = source && typeof source === 'object'
+                    ? (source.title || 'NASA source')
+                    : String(source);
+                const url = resolveSourceUrl(source);
+                const label = escapeHtml(title);
+                if (!url) {
+                    return `<span class="bg-primary/10 px-2 py-0.5 rounded text-[10px] mr-1">${label}</span>`;
+                }
+                return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-0.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 px-2 py-0.5 rounded text-[10px] mr-1 transition-colors">${label}<span class="material-symbols-outlined text-[11px] leading-none">open_in_new</span></a>`;
+            }).join('');
+            return `<div class="mt-2.5 pt-2 border-t border-divider text-[11px] text-primary font-semibold">
+                        Cited NASA Sources: ${badges}
+                    </div>`;
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input-field');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex gap-3 flex-row-reverse';
+            userMsg.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-panel flex items-center justify-center text-primary font-bold shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">person</span>
+                </div>
+                <div class="bg-primary/10 rounded-2xl rounded-tr-none p-3.5 border border-primary/20 text-sm text-on-surface max-w-[80%] shadow-sm">
+                    ${escapeHtml(message)}
+                </div>
+            `;
+            chatMessages.appendChild(userMsg);
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Assistant bubble, filled progressively from the SSE stream
+            const botMsg = document.createElement('div');
+            botMsg.className = 'flex gap-3';
+            botMsg.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-panel flex items-center justify-center text-primary font-bold shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                </div>
+                <div class="bg-panel-strong backdrop-blur-md rounded-2xl rounded-tl-none p-4 border border-panel text-sm text-on-surface max-w-[85%] shadow-sm leading-relaxed space-y-2">
+                    <div class="answer-content"><span class="text-xs text-on-surface-variant animate-pulse">Synthesizing NASA combustion research & graph relationships...</span></div>
+                    <div class="chart-slot"></div>
+                    <div class="warning-slot"></div>
+                    <div class="sources-slot"></div>
+                </div>
+            `;
+            chatMessages.appendChild(botMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            const answerEl = botMsg.querySelector('.answer-content');
+            const chartSlot = botMsg.querySelector('.chart-slot');
+            const warningSlot = botMsg.querySelector('.warning-slot');
+            const sourcesSlot = botMsg.querySelector('.sources-slot');
+
+            let answerText = '';
+
+            const paint = () => {
+                const { body, warning } = splitScopeWarning(answerText);
+                answerEl.innerHTML = renderMarkdown(body);
+                warningSlot.innerHTML = warning ? warningBadgeHtml() : '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+
+            const applyDone = (data) => {
+                if (data.answer) answerText = data.answer;
+                paint();
+                if (data.chart) {
+                    const img = document.createElement('img');
+                    img.src = data.chart;
+                    img.alt = 'Generated combustion chart';
+                    img.className = 'mt-3 w-full rounded-xl border border-divider bg-white';
+                    chartSlot.innerHTML = '';
+                    chartSlot.appendChild(img);
+                }
+                sourcesSlot.innerHTML = sourcesBadgesHtml(data.sources);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+
+            try {
+                const res = await fetch('/api/chat/stream', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                if (!res.ok || !res.body) throw new Error(`Stream failed: ${res.status}`);
+
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                let buffer = '';
+                let receivedToken = false;
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    buffer += decoder.decode(value, { stream: true });
+                    let boundary;
+                    while ((boundary = buffer.indexOf('\n\n')) !== -1) {
+                        const rawEvent = buffer.slice(0, boundary);
+                        buffer = buffer.slice(boundary + 2);
+                        const line = rawEvent.split('\n').find(l => l.startsWith('data:'));
+                        if (!line) continue;
+                        let evt;
+                        try { evt = JSON.parse(line.slice(5).trim()); } catch { continue; }
+
+                        if (evt.type === 'sources') {
+                            sourcesSlot.innerHTML = sourcesBadgesHtml(evt.sources);
+                        } else if (evt.type === 'token') {
+                            answerText += evt.token;
+                            receivedToken = true;
+                            paint();
+                        } else if (evt.type === 'done') {
+                            applyDone(evt);
+                        } else if (evt.type === 'error') {
+                            throw new Error(evt.error || 'Streaming generation failed');
+                        }
+                    }
+                }
+                if (!receivedToken && !answerText) throw new Error('Empty stream');
+            } catch (err) {
+                console.error("Chat stream error:", err);
+                try {
+                    const res = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message })
+                    });
+                    const data = await res.json();
+                    applyDone(data);
+                } catch (fallbackErr) {
+                    console.error("Chat fallback error:", fallbackErr);
+                    answerEl.innerHTML = renderMarkdown("Unable to reach the AI engine. Please check the server logs and try again.");
+                }
+            }
+        }
+
+        async function clearChatMemory() {
+            await fetch('/api/chat/memory', { method: 'DELETE' });
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="p-4 rounded-xl bg-panel border border-panel text-xs text-on-surface-variant text-center">
+                    Conversation memory reset. Ask a new microgravity combustion query!
+                </div>
+            `;
+        }
+
+        // Graph Inspector
+        function populateGraphSelect() {
+            const select = document.getElementById('graph-node-select');
+            select.innerHTML = '';
+            graphNodes.forEach(n => {
+                const opt = new Option(`${n.id} (${n.node_type || 'entity'})`, n.id);
+                select.add(opt);
+            });
+            inspectGraphNode();
+        }
+
+        function inspectGraphNode() {
+            const select = document.getElementById('graph-node-select');
+            const targetId = select.value;
+            const container = document.getElementById('graph-node-details');
+
+            const node = graphNodes.find(n => n.id === targetId);
+            if (!node) return;
+
+            const outbound = graphEdges.filter(e => e.source === targetId);
+            const inbound = graphEdges.filter(e => e.target === targetId);
+
+            container.innerHTML = `
+                <div class="p-3 bg-panel-strong rounded-xl border border-panel">
+                    <span class="text-[10px] uppercase font-bold text-primary">${node.node_type || 'Entity'}</span>
+                    <h4 class="font-bold text-sm text-on-surface">${node.id}</h4>
+                </div>
+                
+                <div>
+                    <span class="font-bold text-on-surface block mb-1">Outbound Connections (${outbound.length}):</span>
+                    <ul class="space-y-1 text-on-surface-variant">
+                        ${outbound.slice(0, 6).map(e => `<li>➔ <b>${e.relationship || 'links'}</b>: ${e.target}</li>`).join('') || '<li>None</li>'}
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="font-bold text-on-surface block mb-1">Inbound Connections (${inbound.length}):</span>
+                    <ul class="space-y-1 text-on-surface-variant">
+                        ${inbound.slice(0, 6).map(e => `<li>🠔 <b>${e.relationship || 'links'}</b>: ${e.source}</li>`).join('') || '<li>None</li>'}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function drawGraphCanvas() {
+            const canvas = document.getElementById('graphCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.parentElement.clientWidth;
+            const h = canvas.parentElement.clientHeight || 400;
+            canvas.width = w;
+            canvas.height = h;
+
+            ctx.clearRect(0, 0, w, h);
+            const p = chartPalette();
+
+            // Simple force simulation projection
+            const sampleNodes = graphNodes.slice(0, 24);
+            const radius = Math.min(w, h) * 0.38;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            const coords = {};
+            sampleNodes.forEach((n, idx) => {
+                const angle = (idx / sampleNodes.length) * 2 * Math.PI;
+                const r = radius * (0.6 + (idx % 3) * 0.2);
+                coords[n.id] = { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle), type: n.node_type };
+            });
+
+            // Draw edges
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = p.edge;
+            graphEdges.forEach(e => {
+                if (coords[e.source] && coords[e.target]) {
+                    ctx.beginPath();
+                    ctx.moveTo(coords[e.source].x, coords[e.source].y);
+                    ctx.lineTo(coords[e.target].x, coords[e.target].y);
+                    ctx.stroke();
+                }
+            });
+
+            // Draw nodes
+            sampleNodes.forEach(n => {
+                const pt = coords[n.id];
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 8, 0, 2 * Math.PI);
+                if (pt.type === 'experiment') ctx.fillStyle = p.primary;
+                else if (pt.type === 'material') ctx.fillStyle = p.info;
+                else if (pt.type === 'finding') ctx.fillStyle = p.success;
+                else ctx.fillStyle = p.danger;
+                ctx.fill();
+                ctx.strokeStyle = p.nodeStroke;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = p.label;
+                ctx.font = '9px Plus Jakarta Sans, sans-serif';
+                const label = (n.acronym || n.name || n.id).slice(0, 10);
+                ctx.fillText(label, pt.x + 10, pt.y + 3);
+            });
+        }
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            syncThemeUI(currentTheme());
+            loadInitialData();
+        });
+    </script>
+</body>
+</html>
